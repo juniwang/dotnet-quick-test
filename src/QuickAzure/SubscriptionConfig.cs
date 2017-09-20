@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Azure.Management.ResourceManager.Fluent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,18 +28,18 @@ namespace QuickAzure
 
     public static class SubscripionConfigExtensions
     {
-        public static AzureEnv Environment(this SubscriptionConfig config)
+        public static AzureEnvironment Environment(this SubscriptionConfig config)
         {
             switch (config.CloudEnvironment)
             {
                 case CloudEnvironment.AzureChina:
-                    return AzureEnv.AzureChina;
+                    return AzureEnvironment.AzureChinaCloud;
                 case CloudEnvironment.AzureUSGovernment:
-                    return AzureEnv.AzureUSGovernment;
+                    return AzureEnvironment.AzureUSGovernment;
                 case CloudEnvironment.AzureGermany:
-                    return AzureEnv.AzureGermany;
+                    return AzureEnvironment.AzureGermanCloud;
                 default:
-                    return AzureEnv.Azure;
+                    return AzureEnvironment.AzureGlobalCloud;
             }
         }
     }

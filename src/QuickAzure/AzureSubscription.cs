@@ -12,14 +12,12 @@ namespace QuickAzure
     public class AzureSubscription
     {
         SubscriptionConfig _subscriptionConfig;
-        AzureEnv _azureEnvironment;
         string _authority;
 
         public AzureSubscription(SubscriptionConfig subscripionConfig)
         {
             _subscriptionConfig = subscripionConfig;
-            _azureEnvironment = subscripionConfig.Environment();
-            _authority = _azureEnvironment.ActiveDirectoryEndpoint + subscripionConfig.TenantId ?? "common" + "/";
+            _authority = subscripionConfig.Environment().AuthenticationEndpoint + subscripionConfig.TenantId ?? "common" + "/";
         }
 
         public override string ToString()
@@ -45,26 +43,18 @@ namespace QuickAzure
             return new TokenCloudCredentials(authenticationResult.AccessToken);
         }
 
-        public AzureEnv AzureEnvironment
-        {
-            get { return _azureEnvironment; }
-        }
-
         private AuthenticationResult AcquireAccessTokenAysnc(AzureResource resource)
         {
             AuthenticationContext authContext = new AuthenticationContext(_authority, false);
             var credentials = new ClientCredential(_subscriptionConfig.ClientId, _subscriptionConfig.ClientSecret);
             return authContext.AcquireTokenAsync(resource.Resource, credentials).Result;
         }
-    }
 
-    public static class IAzureSubscriptionExtensions
-    {
-        public static ManagementClient CreateManagementClient(this AzureSubscription sub)
+        public ManagementClient CreateManagementClient()
         {
             return new ManagementClient(
-                sub.GetCredentials(AzureResource.ServiceManagement),
-                sub.AzureEnvironment.ManagementEndpointUri);
+                GetCredentials(AzureResource.ServiceManagement),
+               new Uri(_subscriptionConfig.Environment().ManagementEnpoint));
         }
     }
 }

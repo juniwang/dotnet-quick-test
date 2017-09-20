@@ -24,17 +24,21 @@ namespace QuickAzure
             }
         }
 
-        public static void RunTokenAcquireFluent()
+        public static void GetAndConfigWebApp()
         {
             var config = SubscriptionConfigLoader.LoadFromFile();
             var subscription = new AnotherSubscription(config);
             var azure = subscription.GetAzure();
-            var sub = subscription.GetAzure().GetCurrentSubscription();
-            //var usage = subscription.GetAzure().VirtualMachines.Manager.Usages.ListByRegion(Region.USEast).ToList();
 
-            Console.WriteLine("SubscriptionName=" + sub.DisplayName);
-            Console.WriteLine("SubscriptionId=" + sub.SubscriptionId);
-            Console.WriteLine("Subscription=" + sub.ToString());
+            var webappId = "/subscriptions/1c5b82ee-9294-4568-b0c0-b9c523bc0d86/resourceGroups/jw-webapp-win-01/providers/Microsoft.Web/sites/jw-webapp-win-01";
+            var webapp = azure.WebApps.GetById(webappId);
+            Console.WriteLine(webapp.ClientCertEnabled);
+            webapp.Update()
+                .WithClientCertEnabled(true)
+                .Apply();
+
+            webapp = azure.WebApps.GetById(webappId);
+            Console.WriteLine(webapp.ClientCertEnabled);
         }
     }
 }

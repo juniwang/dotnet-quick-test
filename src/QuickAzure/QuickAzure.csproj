@@ -182,7 +182,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureEnv.cs" />
     <Compile Include="AzureResource.cs" />
     <Compile Include="AzureSubscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

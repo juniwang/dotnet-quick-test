@@ -11,7 +11,8 @@ namespace QuickDemo
     {
         static void Main(string[] args)
         {
-            QuickAzureRunner.RunTokenAcquireFluent();
+            QuickAzureRunner.GetAndConfigWebApp();
+            Console.Read();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace QuickAzure
         public AnotherSubscription(SubscriptionConfig config)
         {
             _subscriptionConfig = config;
-            _authority = config.Environment().ActiveDirectoryEndpoint + config.TenantId ?? "common" + "/";
+            _authority = config.Environment().AuthenticationEndpoint + config.TenantId ?? "common" + "/";
         }
 
         private AzureCredentials GetCredential()
