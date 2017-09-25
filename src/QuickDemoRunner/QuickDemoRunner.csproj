@@ -66,6 +66,10 @@
       <Project>{d5dff2ab-fcc5-479e-bdf8-f563901ca3f2}</Project>
       <Name>QuickAzure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QuickDemo.Storage\QuickDemo.Storage.csproj">
+      <Project>{C6998D2D-0992-449C-A481-EA9900DF13AA}</Project>
+      <Name>QuickDemo.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

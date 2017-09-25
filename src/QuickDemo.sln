@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickDemoWeb", "QuickDemoWe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickDemo.Common", "QuickDemo.Common\QuickDemo.Common.csproj", "{8FD30F0B-FE0C-4DAC-8EA9-91171B88A9B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickDemo.Storage", "QuickDemo.Storage\QuickDemo.Storage.csproj", "{C6998D2D-0992-449C-A481-EA9900DF13AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8FD30F0B-FE0C-4DAC-8EA9-91171B88A9B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FD30F0B-FE0C-4DAC-8EA9-91171B88A9B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FD30F0B-FE0C-4DAC-8EA9-91171B88A9B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6998D2D-0992-449C-A481-EA9900DF13AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6998D2D-0992-449C-A481-EA9900DF13AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6998D2D-0992-449C-A481-EA9900DF13AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6998D2D-0992-449C-A481-EA9900DF13AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

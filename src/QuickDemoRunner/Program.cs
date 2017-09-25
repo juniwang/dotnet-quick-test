@@ -1,4 +1,5 @@
 ﻿using QuickAzure;
+using QuickDemo.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace QuickDemo
     {
         static void Main(string[] args)
         {
-            QuickAzureRunner.GetAndConfigWebApp();
+            //QuickAzureRunner.Instance.ACSCreateAndUpdateTest();
+            QuickDemoStorageRunner.Instance.TableCaseQuery();
             Console.Read();
         }
     }

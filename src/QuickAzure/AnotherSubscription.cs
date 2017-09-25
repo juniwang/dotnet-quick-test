@@ -34,10 +34,10 @@ namespace QuickAzure
 
         public IAzure GetAzure()
         {
-            var azure = Microsoft.Azure.Management.Fluent.Azure
+            var azure = Azure
                 .Configure()
                 .Authenticate(GetCredential())
-                .WithDefaultSubscription();
+                .WithSubscription(_subscriptionConfig.SubscriptionId);
 
             return azure;
         }
