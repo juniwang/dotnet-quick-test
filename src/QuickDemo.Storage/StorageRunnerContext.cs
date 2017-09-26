@@ -15,9 +15,14 @@ namespace QuickDemo.Storage
             var cloudTable = storage.CreateCloudTableClient().GetTableReference(tableName);
             cloudTable.CreateIfNotExists();
 
-            action(cloudTable);
-
-            cloudTable.DeleteIfExists();
+            try
+            {
+                action(cloudTable);
+            }
+            finally
+            {
+                cloudTable.DeleteIfExists();
+            }
         }
     }
 }

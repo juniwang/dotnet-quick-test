@@ -30,6 +30,8 @@ namespace QuickDemo.Storage
 
         public void TableCaseQuery()
         {
+            // The conclusion is that: `Equals()` using OrdinalIgnoreCase is that working at all.
+
             StorageRunnerContext.RunOnTable(storage,
                 "jwtesttablea" + Guid.NewGuid().ToString().Substring(0, 8),
                 (cloudTable) =>
@@ -45,10 +47,43 @@ namespace QuickDemo.Storage
 
                    var query = cloudTable.CreateQuery<DemoTableEntity>()
                    .Where(p => p.PartitionKey == "PartitionKey"
-                   && p.RowKey.Equals("rowKey", StringComparison.OrdinalIgnoreCase)).ToArray();
+                   && p.Name.Equals("Tomcat", StringComparison.OrdinalIgnoreCase)).ToArray();
 
                    Console.WriteLine("name=" + query.FirstOrDefault()?.Name);
                });
+        }
+
+        public void SumTest()
+        {
+            StorageRunnerContext.RunOnTable(storage,
+                  "jwtesttablea" + Guid.NewGuid().ToString().Substring(0, 8),
+                  (cloudTable) =>
+                  {
+                      var entity = new DemoTableEntity
+                      {
+                          PartitionKey = "PartitionKey",
+                          RowKey = "RowKey",
+                          Name = "Tomcat",
+                          Count = 3,
+                      };
+                      TableOperation insertOperation = TableOperation.Insert(entity);
+                      cloudTable.Execute(insertOperation);
+
+                      entity = new DemoTableEntity
+                      {
+                          PartitionKey = "PartitionKey",
+                          RowKey = "RowKey2",
+                          Name = "jerry",
+                          Count = 100,
+                      };
+                      insertOperation = TableOperation.Insert(entity);
+                      cloudTable.Execute(insertOperation);
+
+                      var query = cloudTable.CreateQuery<DemoTableEntity>()
+                    .Where(p => p.PartitionKey == "PartitionKey").AsEnumerable();
+
+                      Console.WriteLine("Total count:" + query.Sum(p => p.Count));
+                  });
         }
     }
 }

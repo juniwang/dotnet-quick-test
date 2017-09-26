@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.Fluent;
+﻿using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,23 @@ namespace QuickAzure
             }
         }
 
+        public void CoresTest()
+        {
+            Action<IEnumerable<IComputeUsage>> printUsage = (usages) =>
+            {
+                foreach (var u in usages)
+                {
+                    Console.WriteLine($"{u.Name.Value}: {u.CurrentValue}/{u.Limit} {u.Unit.Value}");
+                }
+            };
+
+            var usage1 = Azure.VirtualMachines.Manager.Usages.ListByRegion(Region.USEast);
+            printUsage(usage1);
+
+            usage1 = Azure.VirtualMachines.Manager.Usages.ListByRegion(Region.USWest);
+            printUsage(usage1);
+        }
+
         public void GetAndConfigWebApp()
         {
             var webappId = "/subscriptions/1c5b82ee-9294-4568-b0c0-b9c523bc0d86/resourceGroups/jw-webapp-win-01/providers/Microsoft.Web/sites/jw-webapp-win-01";
@@ -52,7 +70,7 @@ namespace QuickAzure
 
         public async void ACSCreateAndUpdateTest()
         {
-            var acs = await Azure.ContainerServices.GetByIdAsync("/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/jw-acs-rg-001/providers/Microsoft.ContainerService/containerServices/jw-acs-001");
+            var acs = await Azure.ContainerServices.GetByIdAsync("/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/adfdsfasdfasd/providers/Microsoft.ContainerService/containerServices/anotheradsfds");
             if (acs == null)
             {
 
@@ -75,8 +93,8 @@ namespace QuickAzure
             }
             else
             {
-                await acs.Update().WithAgentVMCount(3)
-                    .ApplyAsync();
+                //await acs.Update().WithAgentVMCount(3).ApplyAsync();
+                Console.WriteLine(acs.AgentPoolVMSize);
             }
 
             foreach (var item in acs.Manager.ResourceManager.Deployments.ListByResourceGroup("jw-acs-rg-001"))
