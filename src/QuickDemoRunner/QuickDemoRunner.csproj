@@ -74,6 +74,10 @@
       <Project>{C6998D2D-0992-449C-A481-EA9900DF13AA}</Project>
       <Name>QuickDemo.Storage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QuickDemo.Windows\QuickDemo.Windows.csproj">
+      <Project>{0f3bf5c4-8fdc-470b-8655-3140ae89e54f}</Project>
+      <Name>QuickDemo.Windows</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
