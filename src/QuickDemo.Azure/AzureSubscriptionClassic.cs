@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuickAzure
+namespace QuickDemo.Azure
 {
-    public class AzureSubscription
+    public class AzureSubscriptionClassic
     {
         SubscriptionConfig _subscriptionConfig;
         string _authority;
 
-        public AzureSubscription(SubscriptionConfig subscripionConfig)
+        public AzureSubscriptionClassic(SubscriptionConfig subscripionConfig)
         {
             _subscriptionConfig = subscripionConfig;
             _authority = subscripionConfig.Environment().AuthenticationEndpoint + subscripionConfig.TenantId ?? "common" + "/";

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace QuickAzure
+namespace QuickDemo.Azure
 {
     public class QuickAzureRunner
     {
@@ -31,14 +31,15 @@ namespace QuickAzure
                 if (_azure == null)
                 {
                     _config = SubscriptionConfigLoader.LoadFromFile();
-                    var subscription = new AnotherSubscription(_config);
+                    var subscription = new AzureSubscriptionARM(_config);
                     return subscription.GetAzure();
                 }
                 return _azure;
             }
         }
 
-        public void CoresTest()
+        #region VM
+        public void VMUsageTest()
         {
             Action<IEnumerable<IComputeUsage>> printUsage = (usages) =>
             {
@@ -54,6 +55,21 @@ namespace QuickAzure
             usage1 = Azure.VirtualMachines.Manager.Usages.ListByRegion(Region.USWest);
             printUsage(usage1);
         }
+        #endregion
+
+        #region App Service
+        public void ListAllWebApps()
+        {
+            var webapps = Azure.WebApps.List();
+            foreach (var webapp in webapps)
+            {
+                var config = Azure.WebApps.Inner
+                    .GetConfigurationWithHttpMessagesAsync(webapp.ResourceGroupName, webapp.Name)
+                    .GetAwaiter().GetResult().Body;
+
+                Console.WriteLine(config);
+            }
+        }
 
         public void GetAndConfigWebApp()
         {
@@ -66,8 +82,10 @@ namespace QuickAzure
 
             webapp = Azure.WebApps.GetById(webappId);
             Console.WriteLine(webapp.ClientCertEnabled);
-        }
+        } 
+        #endregion
 
+        #region ACS
         public async void ACSCreateAndUpdateTest()
         {
             var acs = await Azure.ContainerServices.GetByIdAsync("/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/adfdsfasdfasd/providers/Microsoft.ContainerService/containerServices/anotheradsfds");
@@ -102,6 +120,7 @@ namespace QuickAzure
                 Console.WriteLine(item.Name + "    " + item.Timestamp.ToString());
             }
 
-        }
+        } 
+        #endregion
     }
 }

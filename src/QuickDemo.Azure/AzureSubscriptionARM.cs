@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuickAzure
+namespace QuickDemo.Azure
 {
-    public class AnotherSubscription
+    public class AzureSubscriptionARM
     {
         SubscriptionConfig _subscriptionConfig;
         string _authority;
 
-        public AnotherSubscription(SubscriptionConfig config)
+        public AzureSubscriptionARM(SubscriptionConfig config)
         {
             _subscriptionConfig = config;
             _authority = config.Environment().AuthenticationEndpoint + config.TenantId ?? "common" + "/";
@@ -34,7 +34,7 @@ namespace QuickAzure
 
         public IAzure GetAzure()
         {
-            var azure = Azure
+            var azure = Microsoft.Azure.Management.Fluent.Azure
                 .Configure()
                 .Authenticate(GetCredential())
                 .WithSubscription(_subscriptionConfig.SubscriptionId);

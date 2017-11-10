@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace QuickAzure
+namespace QuickDemo.Azure
 {
     public class QuickAzureRunnerClassic
     {
@@ -22,7 +22,7 @@ namespace QuickAzure
         public void RunTokenAcquire()
         {
             var config = SubscriptionConfigLoader.LoadFromFile();
-            var subscription = new AzureSubscription(config);
+            var subscription = new AzureSubscriptionClassic(config);
 
             using (var client = subscription.CreateManagementClient())
             {

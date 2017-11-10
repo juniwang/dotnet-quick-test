@@ -21,6 +21,11 @@ namespace QuickDemo.Windows
             }
         }
 
+        public void PerformanceCounterTest()
+        {
+            QuickDemoPerformanceCounter.UpdatePerfCounters();
+        }
+
         public void LogEventTest()
         {
             QuickDemoEventSource.Current.Startup();

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuickAzure
+namespace QuickDemo.Azure
 {
     /// <summary>
     /// Load subscriptions together with service principals

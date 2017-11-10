@@ -7,8 +7,8 @@
     <ProjectGuid>{D5DFF2AB-FCC5-479E-BDF8-F563901CA3F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QuickAzure</RootNamespace>
-    <AssemblyName>QuickAzure</AssemblyName>
+    <RootNamespace>QuickDemo.Azure</RootNamespace>
+    <AssemblyName>QuickDemo.Azure</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -183,10 +183,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureResource.cs" />
-    <Compile Include="AzureSubscription.cs" />
+    <Compile Include="AzureSubscriptionClassic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuickAzureRunner.cs" />
-    <Compile Include="AnotherSubscription.cs" />
+    <Compile Include="AzureSubscriptionARM.cs" />
     <Compile Include="QuickAzureRunnerClassic.cs" />
     <Compile Include="SubscriptionConfig.cs" />
     <Compile Include="SubscriptionConfigLoader.cs" />
