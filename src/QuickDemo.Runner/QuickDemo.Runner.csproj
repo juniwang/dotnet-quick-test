@@ -42,6 +42,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -69,6 +70,10 @@
     <ProjectReference Include="..\QuickDemo.Common\QuickDemo.Common.csproj">
       <Project>{8FD30F0B-FE0C-4DAC-8EA9-91171B88A9B5}</Project>
       <Name>QuickDemo.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickDemo.Framework\QuickDemo.Framework.csproj">
+      <Project>{999474e5-ebc5-4c65-bd96-ef25bbe16596}</Project>
+      <Name>QuickDemo.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickDemo.Storage\QuickDemo.Storage.csproj">
       <Project>{C6998D2D-0992-449C-A481-EA9900DF13AA}</Project>

@@ -51,7 +51,10 @@ namespace QuickDemo.Azure
 
             var usage1 = Azure.VirtualMachines.Manager.Usages.ListByRegion(Region.USEast);
             printUsage(usage1);
+            Console.WriteLine(usage1.FirstOrDefault(p => p.Name.Value.Equals("cores", StringComparison.OrdinalIgnoreCase))?.Name.Value);
 
+            Console.WriteLine();
+            Console.WriteLine();
             usage1 = Azure.VirtualMachines.Manager.Usages.ListByRegion(Region.USWest);
             printUsage(usage1);
         }
@@ -82,7 +85,7 @@ namespace QuickDemo.Azure
 
             webapp = Azure.WebApps.GetById(webappId);
             Console.WriteLine(webapp.ClientCertEnabled);
-        } 
+        }
         #endregion
 
         #region ACS
@@ -120,7 +123,7 @@ namespace QuickDemo.Azure
                 Console.WriteLine(item.Name + "    " + item.Timestamp.ToString());
             }
 
-        } 
+        }
         #endregion
     }
 }

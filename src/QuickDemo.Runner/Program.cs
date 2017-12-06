@@ -1,9 +1,11 @@
 ﻿using QuickDemo.Azure;
 using QuickDemo.Common.String;
+using QuickDemo.Framework;
 using QuickDemo.Storage;
 using QuickDemo.Windows;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +16,10 @@ namespace QuickDemo.Runner
     {
         static void Main(string[] args)
         {
-            QuickWindowsRunner.Instance.PerformanceCounterTest();
+            //QuickFrameworkRunner.Instance.MultiCount();
+            //QuickWindowsRunner.Instance.PerformanceCounterTest();
             //QuickWindowsRunner.Instance.LogEventTest();
-            //QuickAzureRunner.Instance.ListAllWebApps();
+            //QuickAzureRunner.Instance.VMUsageTest();
             //QuickDemoStorageRunner.Instance.SumTest();
             //Console.WriteLine(StringUtils.Aggregate());
             //Console.WriteLine(StringUtils.Aggregate("Test"));
