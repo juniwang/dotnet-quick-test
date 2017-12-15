@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Certificate\CertificateHelper.cs" />
     <Compile Include="Linq\ExpressionParameterReplacer.cs" />
     <Compile Include="Log\AzureLog.cs" />
     <Compile Include="Log\AzureLog4NetAppender.cs" />
