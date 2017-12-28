@@ -340,4 +340,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-src/QuickDemoRunner/Sub/*.json
+src/QuickDemo.Runner/Sub/*.json

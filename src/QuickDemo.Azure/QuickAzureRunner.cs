@@ -91,10 +91,14 @@ namespace QuickDemo.Azure
         #region ACS
         public async void ACSCreateAndUpdateTest()
         {
-            var acs = await Azure.ContainerServices.GetByIdAsync("/subscriptions/2085065b-00f8-4cba-9675-ba15f4d4ab66/resourceGroups/adfdsfasdfasd/providers/Microsoft.ContainerService/containerServices/anotheradsfds");
+            var lbs = Azure.LoadBalancers.ListByResourceGroup("jsacsdeva");
+            foreach (var item in lbs)
+            {
+                Console.WriteLine(item.Name);
+            }
+            var acs = await Azure.ContainerServices.GetByIdAsync("/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/jsacsdeva/providers/Microsoft.ContainerService/containerServices/acssignalrdeva");
             if (acs == null)
             {
-
                 acs = await Azure.ContainerServices.Define("jw-acs-001")
                    .WithRegion(Region.USEast)
                    .WithNewResourceGroup("jw-acs-rg-001")
@@ -117,12 +121,6 @@ namespace QuickDemo.Azure
                 //await acs.Update().WithAgentVMCount(3).ApplyAsync();
                 Console.WriteLine(acs.AgentPoolVMSize);
             }
-
-            foreach (var item in acs.Manager.ResourceManager.Deployments.ListByResourceGroup("jw-acs-rg-001"))
-            {
-                Console.WriteLine(item.Name + "    " + item.Timestamp.ToString());
-            }
-
         }
         #endregion
     }

@@ -14,5 +14,14 @@ namespace QuickDemo.Storage
 
         public string Name { get; set; }
         public int Count { get; set; }
+        public string CloudEnvironment { get; set; }
+    }
+
+    public enum CloudEnvironment
+    {
+        Azure,
+        AzureChina,
+        AzureUSGovernment,
+        AzureGermany,
     }
 }

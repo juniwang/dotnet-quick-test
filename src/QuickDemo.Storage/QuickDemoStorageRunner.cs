@@ -40,7 +40,8 @@ namespace QuickDemo.Storage
                    {
                        PartitionKey = "PartitionKey",
                        RowKey = "RowKey",
-                       Name = "Tomcat"
+                       Name = "Tomcat",
+                       CloudEnvironment = CloudEnvironment.AzureChina.ToString()
                    };
                    TableOperation insertOperation = TableOperation.Insert(entity);
                    cloudTable.Execute(insertOperation);
