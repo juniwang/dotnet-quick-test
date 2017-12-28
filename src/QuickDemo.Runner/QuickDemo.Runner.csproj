@@ -58,9 +58,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Sub\json1.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickDemo.Azure\QuickDemo.Azure.csproj">
@@ -83,6 +80,9 @@
       <Project>{0f3bf5c4-8fdc-470b-8655-3140ae89e54f}</Project>
       <Name>QuickDemo.Windows</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sub\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
