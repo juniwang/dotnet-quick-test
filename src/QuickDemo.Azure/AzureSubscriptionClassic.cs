@@ -54,7 +54,7 @@ namespace QuickDemo.Azure
         {
             return new ManagementClient(
                 GetCredentials(AzureResource.ServiceManagement),
-               new Uri(_subscriptionConfig.Environment().ManagementEnpoint));
+               new Uri(_subscriptionConfig.Environment().ManagementEndpoint));
         }
     }
 }

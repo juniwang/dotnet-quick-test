@@ -13,6 +13,7 @@ namespace QuickDemo.Storage
         public DemoTableEntity(string partitionKey, string rowKey) : base(partitionKey, rowKey) { }
 
         public string Name { get; set; }
+        public int Max { get; set; }
         public int Count { get; set; }
         public string CloudEnvironment { get; set; }
     }

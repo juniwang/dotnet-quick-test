@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.ContainerService.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
@@ -96,7 +97,7 @@ namespace QuickDemo.Azure
             {
                 Console.WriteLine(item.Name);
             }
-            var acs = await Azure.ContainerServices.GetByIdAsync("/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/jsacsdeva/providers/Microsoft.ContainerService/containerServices/acssignalrdeva");
+            var acs = await Azure.ContainerServices.GetByIdAsync("/subscriptions/9caf2a1e-9c49-49b6-89a2-56bdec7e3f97/resourceGroups/jwlocalacsa/providers/Microsoft.ContainerService/containerServices/jwlocalacsa");
             if (acs == null)
             {
                 acs = await Azure.ContainerServices.Define("jw-acs-001")
@@ -107,19 +108,27 @@ namespace QuickDemo.Azure
                    .WithLinux()
                    .WithRootUsername("azureuser")
                    .WithSshKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMOwpyk8AbS7cpG1YnG205RTfu5/IcoW8ZsCwUpXPEVRdJaSNQqHjLq5pe1Ep2gJ8HxDoFl6fA5qyQKZ8hmL8pnvHjfR0qA9CoD1LAibngE3JlmyxNwgIZ2Xicsr3JH0J4s5ur0f4wmkjwp5eb9IZgRjLWHfysSt9+RAHGP7ibHRf3N1K0tL8+sqto5JxxhghbLbljVJ+FwERZy9+SxGmyLrQyKgRmYgNqyrkxNb+JvFC26Cmw39sVrJkt42Ifpit7n9Ta85/V0dYFrMtk2mLMoGgKAZGFTRfF/Euth63EZcPyHbMypY4X/OWCNMg6xv8c/JhCz23kjJgEys+UIJGXjo3xxBy+5NwyWs6caNwXdxi//ylmJYjyrTDJsIjSvtxJ62V6NFDdFi0NU+jC/tazbksgsg0WWndMNLguKkH/6Hwox/1SwZRhbyw0rufh5aSoR22QA+e4/MlyWGSqdi7cnJHTwEb2WJhB7lISrChpueQqUUa8RwJsTyCTBfrNs1NfW26EO1Bcqe+K1qldT2sj0hz3gOoQeowP0BeDR02/IOQYHFktsdzRDTzK6OyTHQr5D/mvffVoSB+hS5zCJhRhDDc0yjojKBjvfA7WY902b1hqGKMeY5eABHWiRCUm4eHnTkgRXBHB8cSFzqQxwOT1kmL3B0CJmeD8zNYEo1ltdw== juniwang@microsoft.com")
-                   .WithMasterNodeCount(Microsoft.Azure.Management.Compute.Fluent.ContainerServiceMasterProfileCount.MIN)
-                   .WithMasterLeafDomainLabel("jwacsmastera")
+                   .WithMasterNodeCount(Microsoft.Azure.Management.ContainerService.Fluent.ContainerServiceMasterProfileCount.MIN)
                    .DefineAgentPool("jwdefaultpool")
-                   .WithVMCount(1)
-                   .WithVMSize("Standard_DS2")
-                   .WithLeafDomainLabel("jwacsagenta")
+                   .WithVirtualMachineCount(1)
+                   .WithVirtualMachineSize(ContainerServiceVirtualMachineSizeTypes.StandardDS2)
+                   .WithDnsPrefix("jwacsagenta")
                    .Attach()
+                   .WithMasterDnsPrefix("jwacsmastera")
                    .CreateAsync();
             }
             else
             {
                 //await acs.Update().WithAgentVMCount(3).ApplyAsync();
-                Console.WriteLine(acs.AgentPoolVMSize);
+                Console.WriteLine(acs.AgentPools.First().Value.Count);
+                var lb = Azure.LoadBalancers.GetByResourceGroup(acs.ResourceGroupName, acs.MasterDnsPrefix);
+                if (lb != null)
+                {
+                    foreach (var ip in lb.Frontends)
+                    {
+                        Console.WriteLine($"\t{ip.Key}: {ip.Value.Key},{ip.Value.Name} - {ip.ToString()}");
+                    }
+                }
             }
         }
         #endregion

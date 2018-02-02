@@ -1,4 +1,5 @@
-﻿using QuickDemo.Common.Certificate;
+﻿using Autofac;
+using QuickDemo.Common.Certificate;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,6 +20,17 @@ namespace QuickDemo.Common
             {
                 return runner;
             }
+        }
+
+        public void AutofacAdapter()
+        {
+            ContainerBuilder builder = new ContainerBuilder();
+            builder.RegisterInstance(new ForAutofac());
+            builder.RegisterAdapter<ForAutofac, IForAutofac>(f => f);
+
+            IContainer container = builder.Build();
+            var bc = container.Resolve<IForAutofac>();
+            Console.WriteLine(bc?.Name);
         }
 
         public void GetWithCertificate(string uri, string thumbprint)
