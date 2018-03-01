@@ -15,6 +15,7 @@ namespace QuickDemo.Storage
         public string Name { get; set; }
         public int Max { get; set; }
         public int Count { get; set; }
+        public double Rate { get; set; }
         public string CloudEnvironment { get; set; }
     }
 

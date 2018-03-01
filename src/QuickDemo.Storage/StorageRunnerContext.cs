@@ -1,4 +1,6 @@
-﻿using Microsoft.WindowsAzure.Storage;
+﻿using Microsoft.Azure.KeyVault;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,27 @@ namespace QuickDemo.Storage
             finally
             {
                 cloudTable.DeleteIfExists();
+            }
+        }
+
+        public static void RunOnQueue(CloudStorageAccount storage, string queueName, Action<CloudQueue> action)
+        {
+            var queueClient = storage.CreateCloudQueueClient();
+
+            //RsaKey key = new RsaKey(Guid.NewGuid().ToString());
+            //queueClient.DefaultRequestOptions.EncryptionPolicy = new QueueEncryptionPolicy(key, null);
+
+            var cloudQueue = queueClient.GetQueueReference(queueName);
+
+            cloudQueue.CreateIfNotExists();
+
+            try
+            {
+                action(cloudQueue);
+            }
+            finally
+            {
+                cloudQueue.DeleteIfExists();
             }
         }
     }

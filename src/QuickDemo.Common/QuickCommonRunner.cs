@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using QuickDemo.Common.Certificate;
+using QuickDemo.Common.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,11 @@ namespace QuickDemo.Common
             }
         }
 
+        public void ObjectSort()
+        {
+            Sort.TrySort();
+        }
+
         public void AutofacAdapter()
         {
             ContainerBuilder builder = new ContainerBuilder();
@@ -31,6 +37,17 @@ namespace QuickDemo.Common
             IContainer container = builder.Build();
             var bc = container.Resolve<IForAutofac>();
             Console.WriteLine(bc?.Name);
+        }
+
+        public void AutofacResolveTest()
+        {
+            ContainerBuilder builder = new ContainerBuilder();
+            builder.RegisterType<ForAutofac>().As<IForAutofac>();
+
+            IContainer container = builder.Build();
+            var ins1 = container.Resolve<IForAutofac>();
+            var ins2 = container.Resolve<IForAutofac>();
+            Console.WriteLine(ins1 == ins2);
         }
 
         public void GetWithCertificate(string uri, string thumbprint)
