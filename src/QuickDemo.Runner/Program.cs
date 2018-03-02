@@ -35,7 +35,8 @@ namespace QuickDemo.Runner
             //Console.WriteLine(StringUtils.Aggregate("Test"));
             //Console.WriteLine(StringUtils.Aggregate("this", "is", "a", "test"));
 
-            KVTest();
+            // KVTest();
+            TempTest();
 
             Console.Read();
         }

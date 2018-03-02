@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickDemo.Runner</RootNamespace>
     <AssemblyName>QuickDemo.Runner</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AcisSME">
+      <HintPath>..\..\..\..\..\AcisExtensionSDK.1.0.4.656\Tools\AcisSME.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
     </Reference>
@@ -71,11 +75,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickDemo.Azure\QuickDemo.Azure.csproj">
-      <Project>{D5DFF2AB-FCC5-479E-BDF8-F563901CA3F2}</Project>
+      <Project>{d5dff2ab-fcc5-479e-bdf8-f563901ca3f2}</Project>
       <Name>QuickDemo.Azure</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickDemo.Common\QuickDemo.Common.csproj">
-      <Project>{8FD30F0B-FE0C-4DAC-8EA9-91171B88A9B5}</Project>
+      <Project>{8fd30f0b-fe0c-4dac-8ea9-91171b88a9b5}</Project>
       <Name>QuickDemo.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickDemo.Framework\QuickDemo.Framework.csproj">
@@ -83,15 +87,18 @@
       <Name>QuickDemo.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickDemo.Storage\QuickDemo.Storage.csproj">
-      <Project>{C6998D2D-0992-449C-A481-EA9900DF13AA}</Project>
+      <Project>{c6998d2d-0992-449c-a481-ea9900df13aa}</Project>
       <Name>QuickDemo.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuickDemo.Web\QuickDemo.Web.csproj">
+      <Project>{95e0bd1e-a87c-4bf5-82df-076d608e491a}</Project>
+      <Name>QuickDemo.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\QuickDemo.Windows\QuickDemo.Windows.csproj">
       <Project>{0f3bf5c4-8fdc-470b-8655-3140ae89e54f}</Project>
       <Name>QuickDemo.Windows</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
