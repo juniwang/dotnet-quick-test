@@ -38,6 +38,7 @@ namespace QuickDemo.Azure
         {
             var kv = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetToken));
             var sec = await kv.GetSecretAsync(_vaultBaseUrl, name);
+            var cert = await kv.GetCertificateAsync(_vaultBaseUrl, name);
             return sec?.Value;
         }
 
@@ -45,6 +46,13 @@ namespace QuickDemo.Azure
         {
             var kv = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetToken));
             await kv.SetSecretAsync(_vaultBaseUrl, name, secret);
+        }
+
+        public async Task<byte[]> GetCertificatesAsync(string name)
+        {
+            var kv = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetToken));
+            var sec = await kv.GetCertificateAsync(_vaultBaseUrl, name);
+            return sec.Cer;
         }
     }
 }

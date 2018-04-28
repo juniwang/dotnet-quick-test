@@ -85,5 +85,53 @@ namespace QuickDemo.Framework
             }
             catch { }
         }
+
+        public static async Task HeartBeat()
+        {
+            var primary = Task.Delay(TimeSpan.FromSeconds(30));
+            int i = 0;
+            await RunAndWait(primary, (token) =>
+            {
+                Console.Write(i++);
+                Console.WriteLine(" " + DateTime.Now.ToString());
+            }, new CancellationToken());
+        }
+
+        public static async Task RunAndWait(Task primaryTask, Action<CancellationToken> heartbeat, CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+            var stopHeartbeatSource = new CancellationTokenSource();
+            cancellationToken.Register(stopHeartbeatSource.Cancel);
+
+            await Task.WhenAny(primaryTask, PerformHeartbeats(heartbeat, stopHeartbeatSource.Token));
+            stopHeartbeatSource.Cancel();
+        }
+
+        public static async Task PerformHeartbeats(Action<CancellationToken> heartbeatAction, CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+                    if (!cancellationToken.IsCancellationRequested)
+                    {
+                        heartbeatAction(cancellationToken);
+                    }
+                }
+                catch (TaskCanceledException tce)
+                {
+                    if (tce.CancellationToken == cancellationToken)
+                    {
+                        // Totally expected
+                        break;
+                    }
+                    throw;
+                }
+            }
+        }
     }
 }

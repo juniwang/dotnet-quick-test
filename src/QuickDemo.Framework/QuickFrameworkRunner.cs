@@ -22,5 +22,10 @@ namespace QuickDemo.Framework
         {
             MultiThreadTest.CountTest(30000);
         }
+
+        public void HeartBeat()
+        {
+            MultiThreadTest.HeartBeat().Wait();
+        }
     }
 }

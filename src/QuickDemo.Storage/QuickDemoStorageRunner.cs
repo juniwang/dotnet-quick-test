@@ -10,6 +10,7 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.WindowsAzure.Storage.Queue;
 using System.Security.Cryptography;
 using QuickDemo.Azure;
+using Microsoft.WindowsAzure.Storage.Auth;
 
 namespace QuickDemo.Storage
 {
@@ -19,7 +20,9 @@ namespace QuickDemo.Storage
         private CloudStorageAccount storage = null;
         private QuickDemoStorageRunner()
         {
-            var conn = ConfigurationManager.AppSettings["StorageConnectionString"];
+            var conn = Environment.GetEnvironmentVariable("TestStorageConnectionString", EnvironmentVariableTarget.Machine);
+            if (conn == null)
+                conn = ConfigurationManager.AppSettings["StorageConnectionString"];
             if (string.IsNullOrWhiteSpace(conn))
                 throw new ArgumentNullException("StorageConnectionString");
             storage = CloudStorageAccount.Parse(conn);
@@ -30,6 +33,32 @@ namespace QuickDemo.Storage
             {
                 return runner;
             }
+        }
+
+        public void SASTest()
+        {
+            string sasToken = storage.GetSharedAccessSignature(AccessPolicy());
+            StorageCredentials credentials = new StorageCredentials(sasToken);
+            var cloudStorageAccountWithSAS = new CloudStorageAccount(credentials,
+                accountName: storage.Credentials.AccountName,
+                endpointSuffix: null,
+                useHttps: true);
+
+            var table = cloudStorageAccountWithSAS.CreateCloudTableClient().GetTableReference("abfdsfdsfds");
+            table.CreateIfNotExists();
+        }
+
+        private SharedAccessAccountPolicy AccessPolicy()
+        {
+            // policy detail: https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-an-account-sas
+            return new SharedAccessAccountPolicy()
+            {
+                Permissions = SharedAccessAccountPermissions.Read | SharedAccessAccountPermissions.Create | SharedAccessAccountPermissions.Add | SharedAccessAccountPermissions.ProcessMessages | SharedAccessAccountPermissions.Update | SharedAccessAccountPermissions.Delete,
+                Services = SharedAccessAccountServices.Table | SharedAccessAccountServices.Queue,
+                ResourceTypes = SharedAccessAccountResourceTypes.Container | SharedAccessAccountResourceTypes.Object,
+                SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(3),
+                Protocols = SharedAccessProtocol.HttpsOnly
+            };
         }
 
         public void IntricateQuery()
@@ -126,7 +155,7 @@ namespace QuickDemo.Storage
                 "jwtestqueuea" + Guid.NewGuid().ToString().Substring(0, 8),
                 (cloudQueue) =>
                 {
-                    var csp1 = new RSACryptoServiceProvider(); 
+                    var csp1 = new RSACryptoServiceProvider();
                     csp1.FromXmlString(rsaValue);
                     var rsa1 = new RsaKey(kid, csp1);
                     QueueEncryptionPolicy policy = new QueueEncryptionPolicy(rsa1, null);
@@ -275,6 +304,22 @@ namespace QuickDemo.Storage
 
                       Console.WriteLine("Total count:" + query.Sum(p => p.Count));
                   });
+        }
+
+        public void QueueMessageVisibleTest()
+        {
+            StorageRunnerContext.RunOnQueue(storage,
+                "jwtestqueue" + Guid.NewGuid().ToString().Substring(0, 8),
+                 (queue) =>
+                {
+                    var msg = new CloudQueueMessage("any string");
+                    queue.AddMessage(msg);
+
+                    var gm = queue.GetMessage(TimeSpan.FromMinutes(3));
+                    queue.UpdateMessage(gm, TimeSpan.FromSeconds(5), MessageUpdateFields.Visibility);
+                    queue.UpdateMessage(gm, TimeSpan.FromMinutes(5), MessageUpdateFields.Visibility);
+                    queue.UpdateMessage(gm, TimeSpan.FromSeconds(5), MessageUpdateFields.Visibility);
+                });
         }
     }
 }

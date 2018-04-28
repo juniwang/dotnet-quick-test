@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuickDemo.Storage
 {
-    public class DemoTableEntity : TableEntity
+    public partial class DemoTableEntity : TableEntity
     {
         public DemoTableEntity() { }
         public DemoTableEntity(string partitionKey, string rowKey) : base(partitionKey, rowKey) { }
